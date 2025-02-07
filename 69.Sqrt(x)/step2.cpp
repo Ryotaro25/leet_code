@@ -5,17 +5,16 @@ public:
       return x;
     }
 
-    long left = 2;
-    long right = x / 2;
+    int left = 2;
+    int right = x / 2;
 
     while (left <= right) {
-      long middle = left + (right - left) / 2;
-      long square = middle * middle;
+      int middle = left + (right - left) / 2;
 
-      if (square == x) {
+      if (middle == x / middle) {
         return middle;
       }
-      if (square < x) {
+      if (middle < x / middle) {
         left = middle + 1;
       } else {
         right = middle - 1;
