@@ -1,30 +1,24 @@
 class MovingAverage {
   public:
-    int capacity;
-    int start_index;
-    int end_index;
-    vector<double> numbers;
-
     MovingAverage(int size) {
       capacity = size;
-      start_index = 0;
-      end_index = 0;
     }
     
     double next(int val) {
       numbers.push_back(static_cast<int>(val));
-      if (numbers.size() > capacity) {
-        start_index++;
-        end_index++;
-      } else {
-        end_index++;
-      }
+      int nums_size = static_cast<int>(numbers.size());
+ 
       double sum = 0.0;
-      for (int i = start_index; i < end_index; i++) {
-        sum += numbers[i];
+      int start_index = max(0, nums_size - capacity);
+      for (int i = start_index; i < numbers.size(); i++) {
+        sum += static_cast<double>(numbers[i]);
       }
-      return sum / (end_index - start_index);
+      return sum / static_cast<double>(min(nums_size, capacity));
     }
+
+  private:
+    int capacity;
+    vector<double> numbers;
   };
   /**
    * Your MovingAverage object will be instantiated and called as such:
