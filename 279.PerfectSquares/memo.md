@@ -1,0 +1,1 @@
+squares　根のvectorを作るところで、TLE。これはintの範囲を超えたため
