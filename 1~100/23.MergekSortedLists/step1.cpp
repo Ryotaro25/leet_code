@@ -10,28 +10,22 @@
  */
 class Solution {
 public:
-  ListNode* removeNthFromEnd(ListNode* head, int n) {
-    if (!head) {
-      return nullptr;
-    }
-    int num_nodes = 0;
-    ListNode* node = head;
-    while (node) {
-      num_nodes++;
-      node = node->next;
+  ListNode* mergeKLists(vector<ListNode*>& lists) {
+    map<int, vector<ListNode*>> val_to_nodes;
+    for (auto node : lists) {
+      while (node) {
+        val_to_nodes[node->val].push_back(node);
+        node = node->next;
+      }
     }
 
     ListNode dummy_head;
     ListNode* dummy_node = &dummy_head;
-    node = head;
-    int cnt = 0;
-    while (node) {
-      if (cnt != num_nodes - n) {
-       dummy_node->next = node;
-       dummy_node = dummy_node->next;
+    for (auto [val, nodes] : val_to_nodes) {
+      for (auto node : nodes) {
+        dummy_node->next = node;
+        dummy_node = dummy_node->next;
       }
-      node = node->next;
-      cnt++;
     }
     dummy_node->next = nullptr;
     return dummy_head.next;

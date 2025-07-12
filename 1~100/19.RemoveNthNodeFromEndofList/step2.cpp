@@ -21,19 +21,15 @@ public:
       node = node->next;
     }
 
-    ListNode dummy_head;
-    ListNode* dummy_node = &dummy_head;
-    node = head;
-    int cnt = 0;
-    while (node) {
-      if (cnt != num_nodes - n) {
-       dummy_node->next = node;
-       dummy_node = dummy_node->next;
-      }
-      node = node->next;
-      cnt++;
+    ListNode dummy_head(0, head);
+    ListNode* prev = &dummy_head;
+    for (int i = 0; i < num_nodes - n; i++) {
+      prev = prev->next;
     }
-    dummy_node->next = nullptr;
+    // prev->nextは有効な最後のnodeになる場合があるが
+    // nullptrを指すことはないので
+    // prev->nextが最後の要素の場合、prev->next->nextはnullptr
+    prev->next = prev->next->next;
     return dummy_head.next;
   }
 };
