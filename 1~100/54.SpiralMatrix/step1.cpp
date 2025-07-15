@@ -1,41 +1,42 @@
 class Solution {
 public:
   vector<int> spiralOrder(vector<vector<int>>& matrix) {
-    int r = 0;
-    int row_size = matrix.size();
-    int c = 0;
-    int col_size = matrix[0].size();
-
+    if (matrix.empty() || matrix[0].empty()) {
+      return {};
+    }
+    
     vector<int> spiral_ordered;
+    int row_start =  0;
+    int row_end = matrix.size();
+    int col_start = 0;
+    int col_end = matrix[0].size();
 
-    while (r < row_size && c < col_size) {
-      // 右に進む
-      for (int i = c; i < col_size; i++) {
-        spiral_ordered.push_back(matrix[r][i]);
+    while (row_start < row_end && col_start < col_end) {
+      for (int col = col_start; col < col_end; col++) {
+        spiral_ordered.push_back(matrix[row_start][col]);
       }
-      r++;
+      row_start++;
 
-      // 下に進む
-      for (int i = r; i < row_size; i++) {
-        spiral_ordered.push_back(matrix[i][col_size - 1]);
+      for (int row = row_start; row < row_end; row++) {
+        spiral_ordered.push_back(matrix[row][col_end - 1]);
       }
-      col_size--;
+      col_end--;
 
-      // 左に進む（必要であれば）
-      if (r < row_size) {
-        for (int i = col_size - 1; i >= c; i--) {
-          spiral_ordered.push_back(matrix[row_size - 1][i]);
+      if (row_start != row_end) {
+        for (int col = col_end - 1; col >= col_start; col--) {
+          spiral_ordered.push_back(matrix[row_end - 1][col]);
         }
-        row_size--;
+        row_end--;
       }
+      
 
-      // 上に進む（必要であれば）
-      if (c < col_size) {
-        for (int i = row_size - 1; i >= r; i--) {
-          spiral_ordered.push_back(matrix[i][c]);
+      if (col_start != col_end) {
+        for (int row = row_end - 1; row >= row_start; row--) {
+        spiral_ordered.push_back(matrix[row][col_start]);
         }
-        c++;
+        col_start++;
       }
+      
     }
 
     return spiral_ordered;
