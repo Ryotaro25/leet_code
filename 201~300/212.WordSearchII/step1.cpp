@@ -1,0 +1,59 @@
+class Solution {
+public:
+  vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+    TrieNode* root = new TrieNode();
+    for (const string& word : words) {
+      TrieNode* node = root;
+      for (char letter : word) {
+        if (!node->letter_to_child.contains(letter)) {
+          node->letter_to_child[letter] = new TrieNode();
+        }
+        node = node->letter_to_child[letter];
+      }
+      node->word = word;
+    }
+
+    vector<string> found_words;
+    for (int row = 0; row < board.size(); row++) {
+      for (int col = 0; col < board[0].size(); col++) {
+        if (root->letter_to_child.contains(board[row][col])) {
+          SearchWords(board, row, col, root, found_words);
+        }
+      }
+    }
+    return found_words;
+  }
+
+private:
+  struct TrieNode {
+    map<char, TrieNode*> letter_to_child;
+    string word = "";
+  };
+
+  void SearchWords(vector<vector<char>>& board, int row, int col,
+                   TrieNode* node, vector<string>& found_words) {
+    char current_letter = board[row][col];
+    TrieNode* current_node = node->letter_to_child[current_letter];
+
+    if (current_node->word != "") {
+      found_words.push_back(current_node->word);
+      current_node->word = "";
+    }
+
+    board[row][col] = '@';
+    int row_directions[4] = {-1, 0, 1, 0};
+    int col_directions[4] = {0, 1, 0, -1};
+    for (int i = 0; i < 4; i++) {
+      int next_row = row + row_directions[i];
+      int next_col = col + col_directions[i];
+      if (next_row < 0 || next_row >= board.size() || next_col < 0 || next_col >= board[0].size()) {
+        continue;
+      }
+      if (!current_node->letter_to_child.contains(board[next_row][next_col])) {
+        continue;
+      }
+      SearchWords(board, next_row, next_col, current_node, found_words);
+    }
+    board[row][col] = current_letter;
+  }
+};
