@@ -1,0 +1,24 @@
+class Solution {
+public:
+  bool isValid(string s) {
+    map<char, char> valid_pairs = {
+      {'(', ')'},
+      {'[', ']'},
+      {'{', '}'}
+    };
+
+    stack<char> open_brackets;
+    for (char bracket : s) {
+      if (bracket == '(' || bracket == '[' || bracket == '{') {
+        open_brackets.push(bracket);
+        continue;
+      }
+      if (open_brackets.empty() || bracket != valid_pairs[open_brackets.top()]) {
+        return false;
+      }
+      open_brackets.pop();
+    }
+
+    return open_brackets.empty();
+  }
+};
