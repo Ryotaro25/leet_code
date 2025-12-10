@@ -1,15 +1,16 @@
 class KthLargest:
+
     def __init__(self, k: int, nums: List[int]):
-        self.k = k
-        self.decreasing_nums = []
+        self.capacity = k
+        self.top_k_nums = []
         for num in nums:
             self.add(num)
 
     def add(self, val: int) -> int:
-        self.decreasing_nums.append(val)
-        self.decreasing_nums.sort(reverse=True)
-        if len(self.decreasing_nums) >= self.k:
-            return self.decreasing_nums[self.k - 1]
+        heappush(self.top_k_nums, val)
+        if len(self.top_k_nums) > self.capacity:
+            heappop(self.top_k_nums)
+        return self.top_k_nums[0]
 
 
 # Your KthLargest object will be instantiated and called as such:
