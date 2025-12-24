@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/24153511/python-pop-vs-pop0
