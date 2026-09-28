@@ -22,20 +22,8 @@ dummy = temp
 node = temp.next
 
 while node: 
-temp = node
+temp = node.next
 node.next = dummy
-node = temp.next
-dummy = temp
-
-while node: 1 :
-temp = node: 1
-node.next = dummy: none
-node = temp.next: 2
-dummy = temp: 1 
-
-while node: 2 :
-temp = node: 2
-node.next = dummy: 1
-node = temp.next: 3
-dummy = temp: 2
+dymmy = node
+node = temp
 
